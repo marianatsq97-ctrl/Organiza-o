@@ -6,14 +6,16 @@ Aplicativo web simples para pessoas que se sentem perdidas e sobrecarregadas, co
 
 - Captura rápida de tarefas com campo maior (até 1000 caracteres).
 - Priorização automática (alta, média, baixa).
-- Edição da prioridade direto na tarefa.
+- Edição da prioridade direto na tarefa (inclusive depois de criada).
 - Campo de **observações** em cada atividade.
 - Campo “**em que pé está**” (não iniciada, em andamento, aguardando, bloqueada).
 - Destaque da **próxima ação única** para reduzir paralisia.
+- Sugestão inteligente de execução rápida (o que fazer agora, o que evitar e estimativa de entrega do backlog).
 - Histórico de atividades concluídas com data/hora.
-- Aba de gráficos com:
-  - Concluídas por prioridade.
+- Aba de gráficos com **todas as atividades**:
+  - Ativas + concluídas por prioridade.
   - Ativas por status.
+  - Tempo estimado por prioridade.
 - Bloco de integrações com:
   - Google Agenda
   - ClickUp

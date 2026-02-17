@@ -42,6 +42,7 @@
                 <option value="media" selected>Média</option>
                 <option value="baixa">Baixa</option>
               </select>
+              <input id="entrada-estimativa" type="number" min="5" step="5" value="30" />
               <button id="btn-adicionar">Adicionar</button>
             </div>
           </div>
@@ -70,8 +71,13 @@
 
         <section class="card">
           <h2>4) Lista do dia</h2>
-          <p class="muted">Agora você pode editar prioridade, observações e “em que pé está”.</p>
+          <p class="muted">Você pode alterar prioridade, andamento, observações e tempo estimado.</p>
           <ul id="lista-atividades"></ul>
+        </section>
+
+        <section class="card">
+          <h2>5) Sugestão rápida de execução</h2>
+          <p id="insight-rapido" class="muted">Adicione atividades para receber recomendações.</p>
         </section>
 
         <section class="card">
@@ -94,16 +100,20 @@
 
       <section id="tab-graficos" class="tab-panel">
         <section class="card">
-          <h2>Gráficos de produtividade</h2>
-          <p class="muted">Resumo visual por prioridade e status atual das tarefas.</p>
+          <h2>Gráficos de produtividade (todas as atividades)</h2>
+          <p class="muted">Visão de ativas + concluídas, status atual e tempo total estimado.</p>
           <div class="chart-grid">
             <div>
-              <h3>Concluídas por prioridade</h3>
-              <canvas id="grafico-prioridade" width="460" height="220"></canvas>
+              <h3>Todas por prioridade (ativas + concluídas)</h3>
+              <canvas id="grafico-prioridade-total" width="460" height="220"></canvas>
             </div>
             <div>
               <h3>Ativas por status</h3>
               <canvas id="grafico-status" width="460" height="220"></canvas>
+            </div>
+            <div>
+              <h3>Tempo estimado por prioridade (min)</h3>
+              <canvas id="grafico-tempo" width="460" height="220"></canvas>
             </div>
           </div>
         </section>

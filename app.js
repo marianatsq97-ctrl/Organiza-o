@@ -17,11 +17,13 @@ const state = {
 const refs = {
   atividade: document.getElementById("entrada-atividade"),
   prioridade: document.getElementById("entrada-prioridade"),
+  estimativa: document.getElementById("entrada-estimativa"),
   lista: document.getElementById("lista-atividades"),
   listaHistorico: document.getElementById("lista-historico"),
   proxima: document.getElementById("proxima-acao"),
   energia: document.getElementById("energia"),
   energiaTexto: document.getElementById("energia-texto"),
+  insightRapido: document.getElementById("insight-rapido"),
   integracoes: document.getElementById("integracoes"),
   contador: document.getElementById("contador-caracteres"),
   tabs: document.querySelectorAll(".tab-btn"),
@@ -30,8 +32,9 @@ const refs = {
     historico: document.getElementById("tab-historico"),
     graficos: document.getElementById("tab-graficos"),
   },
-  graficoPrioridade: document.getElementById("grafico-prioridade"),
+  graficoPrioridadeTotal: document.getElementById("grafico-prioridade-total"),
   graficoStatus: document.getElementById("grafico-status"),
+  graficoTempo: document.getElementById("grafico-tempo"),
 };
 
 function salvar() {
@@ -50,7 +53,7 @@ function carregar() {
   if (Array.isArray(parsed.integracoes) && parsed.integracoes.length) {
     state.integracoes = defaultIntegracoes.map((base) => {
       const saved = parsed.integracoes.find((item) => item.id === base.id) || {};
-        return {
+      return {
         ...base,
         email: saved.email || "",
         status: saved.status || "desconectado",
@@ -62,6 +65,14 @@ function carregar() {
     ...item,
     andamento: item.andamento || "nao_iniciada",
     observacoes: item.observacoes || "",
+    estimativaMin: Number(item.estimativaMin) > 0 ? Number(item.estimativaMin) : 30,
+  }));
+
+  state.historico = state.historico.map((item) => ({
+    ...item,
+    andamento: item.andamento || "nao_iniciada",
+    observacoes: item.observacoes || "",
+    estimativaMin: Number(item.estimativaMin) > 0 ? Number(item.estimativaMin) : 30,
   }));
 }
 
@@ -98,6 +109,12 @@ function textoAndamento(andamento) {
   return mapa[andamento] || "Não iniciada";
 }
 
+function nivelRapidez(min) {
+  if (min <= 30) return "rápida";
+  if (min <= 90) return "moderada";
+  return "longa";
+}
+
 function atualizarContador() {
   refs.contador.textContent = `${refs.atividade.value.length}/1000`;
 }
@@ -105,6 +122,13 @@ function atualizarContador() {
 function formatarData(iso) {
   if (!iso) return "-";
   return new Date(iso).toLocaleString("pt-BR");
+}
+
+function formatarTempo(minTotal) {
+  const horas = Math.floor(minTotal / 60);
+  const min = minTotal % 60;
+  if (!horas) return `${min} min`;
+  return `${horas}h ${min}min`;
 }
 
 function alternarTab(tab) {
@@ -120,37 +144,6 @@ function alternarTab(tab) {
   }
 
   salvar();
-}
-
-function renderGraficos() {
-  const prioridade = { alta: 0, media: 0, baixa: 0 };
-  state.historico.forEach((item) => {
-    prioridade[item.prioridade] += 1;
-  });
-
-  const statusAtivo = { nao_iniciada: 0, em_andamento: 0, aguardando: 0, bloqueada: 0 };
-  state.atividades.forEach((item) => {
-    statusAtivo[item.andamento] += 1;
-  });
-
-  desenharBarras(
-    refs.graficoPrioridade,
-    [
-      { label: "Alta", value: prioridade.alta, color: "#ef4444" },
-      { label: "Média", value: prioridade.media, color: "#f59e0b" },
-      { label: "Baixa", value: prioridade.baixa, color: "#10b981" },
-    ],
-  );
-
-  desenharBarras(
-    refs.graficoStatus,
-    [
-      { label: "Não iniciada", value: statusAtivo.nao_iniciada, color: "#60a5fa" },
-      { label: "Em andamento", value: statusAtivo.em_andamento, color: "#a78bfa" },
-      { label: "Aguardando", value: statusAtivo.aguardando, color: "#f59e0b" },
-      { label: "Bloqueada", value: statusAtivo.bloqueada, color: "#ef4444" },
-    ],
-  );
 }
 
 function desenharBarras(canvas, dados) {
@@ -180,6 +173,64 @@ function desenharBarras(canvas, dados) {
   });
 }
 
+function renderGraficos() {
+  const prioridadeTotal = { alta: 0, media: 0, baixa: 0 };
+  [...state.atividades, ...state.historico].forEach((item) => {
+    prioridadeTotal[item.prioridade] += 1;
+  });
+
+  const statusAtivo = { nao_iniciada: 0, em_andamento: 0, aguardando: 0, bloqueada: 0 };
+  state.atividades.forEach((item) => {
+    statusAtivo[item.andamento] += 1;
+  });
+
+  const tempoPorPrioridade = { alta: 0, media: 0, baixa: 0 };
+  state.atividades.forEach((item) => {
+    tempoPorPrioridade[item.prioridade] += item.estimativaMin;
+  });
+
+  desenharBarras(refs.graficoPrioridadeTotal, [
+    { label: "Alta", value: prioridadeTotal.alta, color: "#ef4444" },
+    { label: "Média", value: prioridadeTotal.media, color: "#f59e0b" },
+    { label: "Baixa", value: prioridadeTotal.baixa, color: "#10b981" },
+  ]);
+
+  desenharBarras(refs.graficoStatus, [
+    { label: "Não iniciada", value: statusAtivo.nao_iniciada, color: "#60a5fa" },
+    { label: "Em andamento", value: statusAtivo.em_andamento, color: "#a78bfa" },
+    { label: "Aguardando", value: statusAtivo.aguardando, color: "#f59e0b" },
+    { label: "Bloqueada", value: statusAtivo.bloqueada, color: "#ef4444" },
+  ]);
+
+  desenharBarras(refs.graficoTempo, [
+    { label: "Alta", value: tempoPorPrioridade.alta, color: "#fb7185" },
+    { label: "Média", value: tempoPorPrioridade.media, color: "#fbbf24" },
+    { label: "Baixa", value: tempoPorPrioridade.baixa, color: "#34d399" },
+  ]);
+}
+
+function renderInsight() {
+  const energia = Number(refs.energia.value);
+  const disponiveisRapidas = state.atividades.filter(
+    (t) => t.estimativaMin <= 30 && t.andamento !== "bloqueada" && t.andamento !== "aguardando",
+  );
+  const travadas = state.atividades.filter((t) => t.andamento === "bloqueada" || t.andamento === "aguardando");
+  const totalMin = state.atividades.reduce((soma, t) => soma + t.estimativaMin, 0);
+  const diasEstimados = Math.ceil(totalMin / 120); // 2h por dia
+
+  let dicaEnergia = "";
+  if (energia <= 2) dicaEnergia = "Com energia baixa, foque nas tarefas rápidas (até 30 min).";
+  else if (energia === 3) dicaEnergia = "Com energia média, combine 1 tarefa importante + 1 rápida.";
+  else dicaEnergia = "Com energia alta, ataque tarefas longas e de alta prioridade.";
+
+  refs.insightRapido.innerHTML = `
+    <strong>O que fazer rápido agora:</strong> ${disponiveisRapidas.length} tarefa(s) rápida(s).<br>
+    <strong>O que evitar agora:</strong> ${travadas.length} tarefa(s) aguardando/bloqueadas.<br>
+    <strong>Tempo estimado do backlog ativo:</strong> ${formatarTempo(totalMin)} (aprox. ${Math.max(1, diasEstimados)} dia(s) a 2h/dia).<br>
+    <strong>Dica por energia:</strong> ${dicaEnergia}
+  `;
+}
+
 function renderListaAtividades() {
   state.atividades.sort(prioridadeOrdenada);
   refs.lista.innerHTML = "";
@@ -191,6 +242,7 @@ function renderListaAtividades() {
         <div class="task-line">
           <span class="badge ${item.prioridade}">${item.prioridade.toUpperCase()}</span>
           <strong>${item.texto}</strong>
+          <small class="muted">${nivelRapidez(item.estimativaMin)} • ${item.estimativaMin} min</small>
         </div>
 
         <div class="task-grid">
@@ -211,6 +263,11 @@ function renderListaAtividades() {
               <option value="aguardando" ${item.andamento === "aguardando" ? "selected" : ""}>Aguardando</option>
               <option value="bloqueada" ${item.andamento === "bloqueada" ? "selected" : ""}>Bloqueada</option>
             </select>
+          </label>
+
+          <label>
+            Tempo estimado (min)
+            <input type="number" min="5" step="5" value="${item.estimativaMin}" data-id="${item.id}" data-field="estimativaMin" />
           </label>
 
           <label class="task-notes">
@@ -236,7 +293,7 @@ function renderListaAtividades() {
 
   const proxima = state.atividades[0];
   refs.proxima.textContent = proxima
-    ? `${proxima.texto} (${proxima.prioridade}) • ${textoAndamento(proxima.andamento)}`
+    ? `${proxima.texto} (${proxima.prioridade}) • ${textoAndamento(proxima.andamento)} • ${proxima.estimativaMin} min`
     : "Nenhuma atividade ainda.";
 }
 
@@ -262,6 +319,7 @@ function renderHistorico() {
           </div>
           <small class="muted">Concluída em: ${formatarData(item.concluidaEm)}</small>
           <small class="muted">Status final: ${textoAndamento(item.andamento)}</small>
+          <small class="muted">Tempo estimado: ${item.estimativaMin} min</small>
           <small class="muted">Observações: ${item.observacoes || "-"}</small>
         </div>
       `;
@@ -308,6 +366,7 @@ function render() {
   renderListaAtividades();
   renderHistorico();
   renderIntegracoes();
+  renderInsight();
 
   if (state.tabAtiva === "graficos") {
     renderGraficos();
@@ -318,16 +377,20 @@ function adicionarAtividade() {
   const texto = refs.atividade.value.trim();
   if (!texto) return;
 
+  const estimativaMin = Math.max(5, Number(refs.estimativa.value) || 30);
+
   state.atividades.push({
     id: crypto.randomUUID(),
     texto,
     prioridade: refs.prioridade.value,
     andamento: "nao_iniciada",
     observacoes: "",
+    estimativaMin,
     criadaEm: new Date().toISOString(),
   });
 
   refs.atividade.value = "";
+  refs.estimativa.value = "30";
   atualizarContador();
   salvar();
   render();
@@ -377,14 +440,23 @@ refs.lista.addEventListener("change", (e) => {
 });
 
 refs.lista.addEventListener("input", (e) => {
-  const notes = e.target.closest("textarea[data-id][data-field='observacoes']");
-  if (!notes) return;
+  const fieldInput = e.target.closest("input[data-id], textarea[data-id]");
+  if (!fieldInput) return;
 
-  const item = state.atividades.find((a) => a.id === notes.dataset.id);
+  const item = state.atividades.find((a) => a.id === fieldInput.dataset.id);
   if (!item) return;
 
-  item.observacoes = notes.value;
+  if (fieldInput.dataset.field === "estimativaMin") {
+    item.estimativaMin = Math.max(5, Number(fieldInput.value) || 5);
+  }
+
+  if (fieldInput.dataset.field === "observacoes") {
+    item.observacoes = fieldInput.value;
+  }
+
   salvar();
+  renderInsight();
+  if (state.tabAtiva === "graficos") renderGraficos();
 });
 
 document.getElementById("btn-gerar-plano").addEventListener("click", () => {
@@ -401,6 +473,7 @@ document.getElementById("btn-limpar").addEventListener("click", () => {
 
 refs.energia.addEventListener("input", () => {
   refs.energiaTexto.textContent = textoEnergia(Number(refs.energia.value));
+  renderInsight();
 });
 
 refs.integracoes.addEventListener("input", (e) => {
