@@ -50,11 +50,10 @@ function carregar() {
   if (Array.isArray(parsed.integracoes) && parsed.integracoes.length) {
     state.integracoes = defaultIntegracoes.map((base) => {
       const saved = parsed.integracoes.find((item) => item.id === base.id) || {};
-      const conectadoLegado = Boolean(saved.conectado);
-      return {
+        return {
         ...base,
         email: saved.email || "",
-        status: saved.status || (conectadoLegado ? "conectado" : "desconectado"),
+        status: saved.status || "desconectado",
       };
     });
   }
@@ -100,7 +99,7 @@ function textoAndamento(andamento) {
 }
 
 function atualizarContador() {
-  refs.contador.textContent = `${refs.atividade.value.length}/300`;
+  refs.contador.textContent = `${refs.atividade.value.length}/1000`;
 }
 
 function formatarData(iso) {
@@ -218,7 +217,7 @@ function renderListaAtividades() {
             Observações
             <textarea
               rows="2"
-              maxlength="280"
+              maxlength="1000"
               data-id="${item.id}"
               data-field="observacoes"
               placeholder="Detalhes rápidos, próximos passos, bloqueios..."
@@ -431,6 +430,10 @@ refs.integracoes.addEventListener("click", (e) => {
   }
 
   if (action === "connect") {
+    if (item.status !== "pendente" || !emailValido(item.email)) {
+      alert("Envie uma solicitação com e-mail válido antes de conectar.");
+      return;
+    }
     item.status = "conectado";
   }
 

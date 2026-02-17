@@ -4,7 +4,7 @@ Aplicativo web simples para pessoas que se sentem perdidas e sobrecarregadas, co
 
 ## O que já faz
 
-- Captura rápida de tarefas com campo maior (até 300 caracteres).
+- Captura rápida de tarefas com campo maior (até 1000 caracteres).
 - Priorização automática (alta, média, baixa).
 - Edição da prioridade direto na tarefa.
 - Campo de **observações** em cada atividade.
@@ -19,7 +19,7 @@ Aplicativo web simples para pessoas que se sentem perdidas e sobrecarregadas, co
   - ClickUp
   - Notas do celular
   - Outlook
-- Fluxo de integração com **e-mail + solicitação de conexão** antes de conectar.
+- Fluxo de integração **obrigatório** com e-mail + solicitação de conexão antes de conectar.
 
 > Nesta versão inicial, as integrações estão no fluxo de UI e persistência local. Para integração real com contas, é necessário adicionar OAuth + APIs oficiais.
 
