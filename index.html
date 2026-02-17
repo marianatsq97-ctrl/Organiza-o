@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FocoJá | Planejamento Diário Integrado</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <h1>FocoJá</h1>
+      <p>
+        Organize suas atividades de trabalho, pare de pensar demais e execute o
+        próximo passo com clareza.
+      </p>
+      <div class="hero-cta">
+        <button id="btn-gerar-plano" class="primary">Gerar plano do dia</button>
+        <button id="btn-limpar" class="secondary">Recomeçar dia</button>
+      </div>
+    </header>
+
+    <main>
+      <nav class="tabs card" aria-label="Navegação principal">
+        <button class="tab-btn active" data-tab="planejamento">Planejamento</button>
+        <button class="tab-btn" data-tab="historico">Histórico</button>
+        <button class="tab-btn" data-tab="graficos">Gráficos</button>
+      </nav>
+
+      <section id="tab-planejamento" class="tab-panel active">
+        <section class="card">
+          <h2>1) Captura rápida (tirar da cabeça)</h2>
+          <div class="capture-row">
+            <textarea
+              id="entrada-atividade"
+              placeholder="Ex.: Enviar proposta para cliente X e definir próximos passos"
+              maxlength="300"
+              rows="3"
+            ></textarea>
+            <div class="capture-actions">
+              <select id="entrada-prioridade">
+                <option value="alta">Alta</option>
+                <option value="media" selected>Média</option>
+                <option value="baixa">Baixa</option>
+              </select>
+              <button id="btn-adicionar">Adicionar</button>
+            </div>
+          </div>
+          <div class="capture-footnote">
+            <small>Dica: registre tudo em 30 segundos, sem julgar.</small>
+            <small id="contador-caracteres">0/300</small>
+          </div>
+        </section>
+
+        <section class="grid">
+          <article class="card">
+            <h2>2) Próxima ação única</h2>
+            <p class="muted">
+              Faça apenas a atividade destacada abaixo. Termine e avance para a próxima.
+            </p>
+            <div id="proxima-acao" class="highlight">Nenhuma atividade ainda.</div>
+          </article>
+
+          <article class="card">
+            <h2>3) Energia e foco</h2>
+            <label for="energia">Seu nível de energia agora:</label>
+            <input type="range" id="energia" min="1" max="5" value="3" />
+            <p id="energia-texto" class="muted">Médio: ideal para tarefas importantes.</p>
+          </article>
+        </section>
+
+        <section class="card">
+          <h2>4) Lista do dia</h2>
+          <p class="muted">Agora você pode editar prioridade, observações e “em que pé está”.</p>
+          <ul id="lista-atividades"></ul>
+        </section>
+
+        <section class="card">
+          <h2>Integrações (Google Agenda, Notas do celular, ClickUp e outros)</h2>
+          <p class="muted">
+            Agora cada integração pede e-mail e permite enviar solicitação de conexão
+            antes de conectar a conta.
+          </p>
+          <div id="integracoes" class="integrations"></div>
+        </section>
+      </section>
+
+      <section id="tab-historico" class="tab-panel">
+        <section class="card">
+          <h2>Histórico de atividades concluídas</h2>
+          <p class="muted">Aqui você acompanha tudo que já foi finalizado.</p>
+          <ul id="lista-historico"></ul>
+        </section>
+      </section>
+
+      <section id="tab-graficos" class="tab-panel">
+        <section class="card">
+          <h2>Gráficos de produtividade</h2>
+          <p class="muted">Resumo visual por prioridade e status atual das tarefas.</p>
+          <div class="chart-grid">
+            <div>
+              <h3>Concluídas por prioridade</h3>
+              <canvas id="grafico-prioridade" width="460" height="220"></canvas>
+            </div>
+            <div>
+              <h3>Ativas por status</h3>
+              <canvas id="grafico-status" width="460" height="220"></canvas>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        Feito para pessoas sobrecarregadas: menos planejamento infinito, mais execução.
+      </p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
