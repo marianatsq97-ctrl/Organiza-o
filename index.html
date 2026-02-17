@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FocoJá | Planejamento Diário Integrado</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <h1>FocoJá</h1>
+      <p>
+        Organize suas atividades de trabalho, pare de pensar demais e execute o
+        próximo passo com clareza.
+      </p>
+      <div class="hero-cta">
+        <button id="btn-gerar-plano" class="primary">Gerar plano do dia</button>
+        <button id="btn-limpar" class="secondary">Recomeçar dia</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>1) Captura rápida (tirar da cabeça)</h2>
+        <div class="capture-row">
+          <input
+            id="entrada-atividade"
+            placeholder="Ex.: Enviar proposta para cliente X"
+            maxlength="120"
+          />
+          <select id="entrada-prioridade">
+            <option value="alta">Alta</option>
+            <option value="media" selected>Média</option>
+            <option value="baixa">Baixa</option>
+          </select>
+          <button id="btn-adicionar">Adicionar</button>
+        </div>
+        <small>Dica: registre tudo em 30 segundos, sem julgar.</small>
+      </section>
+
+      <section class="grid">
+        <article class="card">
+          <h2>2) Próxima ação única</h2>
+          <p class="muted">
+            Faça apenas a atividade destacada abaixo. Termine e avance para a próxima.
+          </p>
+          <div id="proxima-acao" class="highlight">Nenhuma atividade ainda.</div>
+        </article>
+
+        <article class="card">
+          <h2>3) Energia e foco</h2>
+          <label for="energia">Seu nível de energia agora:</label>
+          <input type="range" id="energia" min="1" max="5" value="3" />
+          <p id="energia-texto" class="muted">Médio: ideal para tarefas importantes.</p>
+        </article>
+      </section>
+
+      <section class="card">
+        <h2>4) Lista do dia</h2>
+        <ul id="lista-atividades"></ul>
+      </section>
+
+      <section class="card">
+        <h2>Integrações (Google Agenda, Notas do celular, ClickUp e outros)</h2>
+        <p class="muted">
+          Conecte suas contas para centralizar tudo em um lugar. Esta versão já tem o
+          fluxo de conexão e estrutura pronta para integração real via API OAuth.
+        </p>
+        <div id="integracoes" class="integrations"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        Feito para pessoas sobrecarregadas: menos planejamento infinito, mais execução.
+      </p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
