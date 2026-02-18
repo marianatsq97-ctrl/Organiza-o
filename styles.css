@@ -129,11 +129,12 @@ main {
 .capture-actions {
   display: grid;
   gap: 0.5rem;
-  min-width: 140px;
+  min-width: 210px;
 }
 
 #entrada-atividade,
 #entrada-estimativa,
+#entrada-prazo,
 .integration input,
 .task-grid textarea,
 .task-grid select,
@@ -270,10 +271,19 @@ footer {
 
 @media (max-width: 700px) {
   .capture-row { grid-template-columns: 1fr; }
-  .capture-actions { grid-template-columns: 1fr 1fr; }
+  .capture-actions { grid-template-columns: 1fr; }
 }
 
 
 #insight-rapido {
   line-height: 1.6;
+}
+
+
+.plan-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
 }

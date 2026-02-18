@@ -7,20 +7,25 @@ Aplicativo web simples para pessoas que se sentem perdidas e sobrecarregadas, co
 - Captura rápida de tarefas com campo maior (até 1000 caracteres).
 - Priorização automática (alta, média, baixa).
 - Edição da prioridade direto na tarefa (inclusive depois de criada).
+- Classificação de tarefa como:
+  - **Diária**
+  - **Com prazo de entrega**
+  - **Sem prazo estimado**
+- Campo de data para entregas com prazo.
 - Campo de **observações** em cada atividade.
 - Campo “**em que pé está**” (não iniciada, em andamento, aguardando, bloqueada).
+- Campo de **tempo estimado** (minutos) por tarefa.
 - Destaque da **próxima ação única** para reduzir paralisia.
 - Sugestão inteligente de execução rápida (o que fazer agora, o que evitar e estimativa de entrega do backlog).
+- Seção “Plano do dia e entregas” com:
+  - seleção automática das atividades que cabem no dia (baseado em energia, prioridade, rapidez e urgência);
+  - lista de entregas com prazo e sinalização de vencimento/atraso.
 - Histórico de atividades concluídas com data/hora.
 - Aba de gráficos com **todas as atividades**:
   - Ativas + concluídas por prioridade.
   - Ativas por status.
   - Tempo estimado por prioridade.
-- Bloco de integrações com:
-  - Google Agenda
-  - ClickUp
-  - Notas do celular
-  - Outlook
+  - Tipos de atividade (diária/com prazo/sem prazo).
 - Fluxo de integração **obrigatório** com e-mail + solicitação de conexão antes de conectar.
 
 > Nesta versão inicial, as integrações estão no fluxo de UI e persistência local. Para integração real com contas, é necessário adicionar OAuth + APIs oficiais.
@@ -56,34 +61,3 @@ http://localhost:4173
 ```
 
 Pronto. O app já deve aparecer.
-
----
-
-## Dúvidas comuns
-
-### “Posso só dar duplo clique no index.html?”
-Pode funcionar em alguns casos, mas **o recomendado é usar servidor local** (comando acima), porque é a forma mais estável para evoluir o projeto.
-
-### “Como parar o servidor?”
-No terminal onde ele está rodando, pressione:
-
-```text
-Ctrl + C
-```
-
-### “Como saber se o servidor subiu?”
-Você verá algo parecido com:
-
-```text
-Serving HTTP on 0.0.0.0 port 4173
-```
-
-## Próximos passos para integração real
-
-1. Criar backend (Node/Express ou FastAPI) para OAuth e armazenamento seguro de tokens.
-2. Implementar endpoints para Google Calendar API (listar e criar eventos).
-3. Implementar integração ClickUp API (tasks/spaces).
-4. Sincronização de notas do celular:
-   - iOS: via iCloud/atalhos/webhook (dependendo do fluxo desejado).
-   - Android: Google Keep API alternativa ou app de notas com API/webhook.
-5. Adicionar rotina de sincronização automática e logs.

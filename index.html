@@ -42,6 +42,12 @@
                 <option value="media" selected>Média</option>
                 <option value="baixa">Baixa</option>
               </select>
+              <select id="entrada-tipo">
+                <option value="diaria">Diária</option>
+                <option value="com_prazo">Com prazo de entrega</option>
+                <option value="sem_prazo">Sem prazo estimado</option>
+              </select>
+              <input id="entrada-prazo" type="date" />
               <input id="entrada-estimativa" type="number" min="5" step="5" value="30" />
               <button id="btn-adicionar">Adicionar</button>
             </div>
@@ -71,13 +77,30 @@
 
         <section class="card">
           <h2>4) Lista do dia</h2>
-          <p class="muted">Você pode alterar prioridade, andamento, observações e tempo estimado.</p>
+          <p class="muted">Você pode alterar prioridade, andamento, observações, prazo e tempo estimado.</p>
           <ul id="lista-atividades"></ul>
         </section>
 
         <section class="card">
           <h2>5) Sugestão rápida de execução</h2>
           <p id="insight-rapido" class="muted">Adicione atividades para receber recomendações.</p>
+        </section>
+
+        <section class="card">
+          <div class="plan-head">
+            <h2>6) Plano do dia e entregas</h2>
+            <button id="btn-montar-dia" class="primary">Selecionar atividades de hoje</button>
+          </div>
+          <div class="grid">
+            <article>
+              <h3>Atividades sugeridas para hoje</h3>
+              <ul id="lista-plano-hoje"></ul>
+            </article>
+            <article>
+              <h3>Entregas com prazo</h3>
+              <ul id="lista-entregas"></ul>
+            </article>
+          </div>
         </section>
 
         <section class="card">
@@ -114,6 +137,10 @@
             <div>
               <h3>Tempo estimado por prioridade (min)</h3>
               <canvas id="grafico-tempo" width="460" height="220"></canvas>
+            </div>
+            <div>
+              <h3>Tipos de atividade (ativas)</h3>
+              <canvas id="grafico-tipos" width="460" height="220"></canvas>
             </div>
           </div>
         </section>
