@@ -9,10 +9,7 @@
   <body>
     <header class="hero">
       <h1>FocoJá</h1>
-      <p>
-        Organize suas atividades de trabalho, pare de pensar demais e execute o
-        próximo passo com clareza.
-      </p>
+      <p>Organize trabalho e vida pessoal sem sobrecarga, com foco em execução.</p>
       <div class="hero-cta">
         <button id="btn-gerar-plano" class="primary">Gerar plano do dia</button>
         <button id="btn-limpar" class="secondary">Recomeçar dia</button>
@@ -21,21 +18,22 @@
 
     <main>
       <nav class="tabs card" aria-label="Navegação principal">
-        <button class="tab-btn active" data-tab="planejamento">Planejamento</button>
+        <button class="tab-btn active" data-tab="planejamento">Organização</button>
         <button class="tab-btn" data-tab="historico">Histórico</button>
         <button class="tab-btn" data-tab="graficos">Gráficos</button>
       </nav>
 
       <section id="tab-planejamento" class="tab-panel active">
         <section class="card">
-          <h2>1) Captura rápida (tirar da cabeça)</h2>
+          <div class="subtabs">
+            <button class="subtab-btn active" data-categoria="trabalho">Atividades de Trabalho</button>
+            <button class="subtab-btn" data-categoria="pessoal">Atividades Pessoal/Casa</button>
+          </div>
+          <p class="muted" id="categoria-atual-label">Você está organizando: Trabalho.</p>
+
+          <h2>Captura rápida</h2>
           <div class="capture-row">
-            <textarea
-              id="entrada-atividade"
-              placeholder="Ex.: Enviar proposta para cliente X e definir próximos passos"
-              maxlength="1000"
-              rows="5"
-            ></textarea>
+            <textarea id="entrada-atividade" maxlength="1000" rows="5" placeholder="Descreva a atividade..."></textarea>
             <div class="capture-actions">
               <select id="entrada-prioridade">
                 <option value="alta">Alta</option>
@@ -60,15 +58,12 @@
 
         <section class="grid">
           <article class="card">
-            <h2>2) Próxima ação única</h2>
-            <p class="muted">
-              Faça apenas a atividade destacada abaixo. Termine e avance para a próxima.
-            </p>
+            <h2>Próxima ação única</h2>
             <div id="proxima-acao" class="highlight">Nenhuma atividade ainda.</div>
           </article>
 
           <article class="card">
-            <h2>3) Energia e foco</h2>
+            <h2>Energia e foco</h2>
             <label for="energia">Seu nível de energia agora:</label>
             <input type="range" id="energia" min="1" max="5" value="3" />
             <p id="energia-texto" class="muted">Médio: ideal para tarefas importantes.</p>
@@ -76,19 +71,18 @@
         </section>
 
         <section class="card">
-          <h2>4) Lista do dia</h2>
-          <p class="muted">Você pode alterar prioridade, andamento, observações, prazo e tempo estimado.</p>
+          <h2>Lista do contexto atual</h2>
           <ul id="lista-atividades"></ul>
         </section>
 
         <section class="card">
-          <h2>5) Sugestão rápida de execução</h2>
+          <h2>Sugestão rápida de execução</h2>
           <p id="insight-rapido" class="muted">Adicione atividades para receber recomendações.</p>
         </section>
 
         <section class="card">
           <div class="plan-head">
-            <h2>6) Plano do dia e entregas</h2>
+            <h2>Plano do dia e entregas (contexto atual)</h2>
             <button id="btn-montar-dia" class="primary">Selecionar atividades de hoje</button>
           </div>
           <div class="grid">
@@ -102,45 +96,26 @@
             </article>
           </div>
         </section>
-
-        <section class="card">
-          <h2>Integrações (Google Agenda, Notas do celular, ClickUp e outros)</h2>
-          <p class="muted">
-            Para conectar, é obrigatório informar e-mail e enviar solicitação primeiro.
-            Conexões antigas foram redefinidas para exigir esse fluxo.
-          </p>
-          <div id="integracoes" class="integrations"></div>
-        </section>
       </section>
 
       <section id="tab-historico" class="tab-panel">
         <section class="card">
           <h2>Histórico de atividades concluídas</h2>
-          <p class="muted">Aqui você acompanha tudo que já foi finalizado.</p>
           <ul id="lista-historico"></ul>
         </section>
       </section>
 
       <section id="tab-graficos" class="tab-panel">
         <section class="card">
-          <h2>Gráficos de produtividade (todas as atividades)</h2>
-          <p class="muted">Visão de ativas + concluídas, status atual e tempo total estimado.</p>
+          <h2>Gráficos por contexto</h2>
           <div class="chart-grid">
             <div>
-              <h3>Todas por prioridade (ativas + concluídas)</h3>
-              <canvas id="grafico-prioridade-total" width="460" height="220"></canvas>
+              <h3>Atividades de Trabalho</h3>
+              <canvas id="grafico-trabalho" width="460" height="220"></canvas>
             </div>
             <div>
-              <h3>Ativas por status</h3>
-              <canvas id="grafico-status" width="460" height="220"></canvas>
-            </div>
-            <div>
-              <h3>Tempo estimado por prioridade (min)</h3>
-              <canvas id="grafico-tempo" width="460" height="220"></canvas>
-            </div>
-            <div>
-              <h3>Tipos de atividade (ativas)</h3>
-              <canvas id="grafico-tipos" width="460" height="220"></canvas>
+              <h3>Atividades Pessoal/Casa</h3>
+              <canvas id="grafico-pessoal" width="460" height="220"></canvas>
             </div>
           </div>
         </section>
@@ -148,9 +123,7 @@
     </main>
 
     <footer>
-      <p>
-        Feito para pessoas sobrecarregadas: menos planejamento infinito, mais execução.
-      </p>
+      <p>Feito para pessoas sobrecarregadas: menos planejamento infinito, mais execução.</p>
     </footer>
 
     <script src="app.js"></script>

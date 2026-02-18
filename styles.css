@@ -287,3 +287,8 @@ footer {
   gap: 0.8rem;
   flex-wrap: wrap;
 }
+
+
+.subtabs { display:flex; gap:0.6rem; flex-wrap:wrap; margin-bottom:0.6rem; }
+.subtab-btn { background:#10162c; color:var(--text); border-color:#32406f; }
+.subtab-btn.active { background: rgba(96, 165, 250, 0.18); border-color: var(--accent); }
