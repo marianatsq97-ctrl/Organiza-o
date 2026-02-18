@@ -1,3 +1,4 @@
+const APP_VERSION = "2026.02.17-2";
 const STORAGE_KEY = "focoja-dados";
 
 const state = {
@@ -33,6 +34,7 @@ const refs = {
   },
   graficoTrabalho: document.getElementById("grafico-trabalho"),
   graficoPessoal: document.getElementById("grafico-pessoal"),
+  version: document.getElementById("app-version"),
 };
 
 function salvar() {
@@ -374,6 +376,8 @@ refs.lista.addEventListener("input", (e) => {
   renderInsight();
   if (state.tabAtiva === "graficos") renderGraficos();
 });
+
+if (refs.version) refs.version.textContent = APP_VERSION;
 
 carregar();
 refs.energiaTexto.textContent = textoEnergia(Number(refs.energia.value));

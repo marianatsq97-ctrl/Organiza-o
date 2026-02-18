@@ -292,3 +292,14 @@ footer {
 .subtabs { display:flex; gap:0.6rem; flex-wrap:wrap; margin-bottom:0.6rem; }
 .subtab-btn { background:#10162c; color:var(--text); border-color:#32406f; }
 .subtab-btn.active { background: rgba(96, 165, 250, 0.18); border-color: var(--accent); }
+
+
+.version-pill {
+  font-size: 0.7rem;
+  background: rgba(96,165,250,0.2);
+  border: 1px solid #3b82f6;
+  color: #bfdbfe;
+  padding: 0.18rem 0.4rem;
+  border-radius: 999px;
+  vertical-align: middle;
+}
