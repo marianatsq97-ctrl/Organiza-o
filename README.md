@@ -27,6 +27,12 @@ Abra `http://localhost:4173`.
 
 Se o site não refletir a última versão:
 
+
+### Importante no seu caso (print com branch `principal`)
+Seu GitHub Pages está configurado para **Implantar a partir de uma ramificação** usando **`principal`**.  
+Então só atualiza quando o commit entra nessa branch.
+
+
 1. Garanta que o commit foi enviado para o GitHub:
    ```bash
    git push origin <sua-branch>

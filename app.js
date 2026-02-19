@@ -1,4 +1,4 @@
-const APP_VERSION = "2026.02.17-2";
+const APP_VERSION = "2026.02.18-3";
 const STORAGE_KEY = "focoja-dados";
 
 const state = {
