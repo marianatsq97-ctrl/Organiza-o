@@ -54,7 +54,8 @@ Então só atualiza quando o commit entra nessa branch.
 Este repositório agora possui workflow em `.github/workflows/deploy-pages.yml`.
 
 Como funciona:
-- A cada `push` na branch `main` **ou** `principal`, o GitHub Actions publica automaticamente no Pages.
+- A cada `push` na branch `principal`, o GitHub Actions publica automaticamente no Pages.
+- E quando houver push em `main`, o workflow de sincronização copia automaticamente para `principal`.
 - Você também pode rodar manualmente em **Actions > Deploy static site to GitHub Pages > Run workflow**.
 
 Se ainda não atualizou no seu link:
@@ -62,3 +63,13 @@ Se ainda não atualizou no seu link:
 2. Abra **Actions** e verifique se o workflow `Deploy static site to GitHub Pages` concluiu com sucesso.
 3. Faça hard refresh no navegador (`Ctrl+F5` / `Cmd+Shift+R`).
 4. Abra em aba anônima.
+
+
+## Correção definitiva para o seu cenário (main x principal)
+
+Como seu GitHub Pages está configurado para publicar da branch `principal`, foi adicionada automação para evitar divergência:
+
+- Workflow `sync-main-to-principal.yml`: sempre que houver push na `main`, ele sincroniza o conteúdo para `principal`.
+- Workflow `deploy-pages.yml`: publica no Pages quando houver push em `principal`.
+
+Assim, mesmo trabalhando na `main`, o site publicado na `principal` será atualizado automaticamente.
