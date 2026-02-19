@@ -41,3 +41,18 @@ Se o site não refletir a última versão:
 
 
 5. Se persistir, use o botão **Forçar atualização do app** na interface (ele limpa cache/service worker e recarrega com versão).
+
+
+## Publicação automática no GitHub Pages (configurado)
+
+Este repositório agora possui workflow em `.github/workflows/deploy-pages.yml`.
+
+Como funciona:
+- A cada `push` na branch `main`, o GitHub Actions publica automaticamente no Pages.
+- Você também pode rodar manualmente em **Actions > Deploy static site to GitHub Pages > Run workflow**.
+
+Se ainda não atualizou no seu link:
+1. Confirme se o commit está na `main` (não só em branch/PR).
+2. Abra **Actions** e verifique se o workflow `Deploy static site to GitHub Pages` concluiu com sucesso.
+3. Faça hard refresh no navegador (`Ctrl+F5` / `Cmd+Shift+R`).
+4. Abra em aba anônima.
