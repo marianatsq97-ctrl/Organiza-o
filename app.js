@@ -35,6 +35,7 @@ const refs = {
   graficoTrabalho: document.getElementById("grafico-trabalho"),
   graficoPessoal: document.getElementById("grafico-pessoal"),
   version: document.getElementById("app-version"),
+  buildInfo: document.getElementById("build-info"),
 };
 
 function salvar() {
@@ -62,6 +63,26 @@ function carregar() {
   state.planoHojeIds = Array.isArray(parsed.planoHojeIds) ? parsed.planoHojeIds : [];
   state.tabAtiva = parsed.tabAtiva || "planejamento";
   state.categoriaAtiva = parsed.categoriaAtiva || "trabalho";
+}
+
+async function forcarAtualizacao() {
+  try {
+    if ("serviceWorker" in navigator) {
+      const regs = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map((r) => r.unregister()));
+    }
+    if ("caches" in window) {
+      const keys = await caches.keys();
+      await Promise.all(keys.map((k) => caches.delete(k)));
+    }
+  } catch (e) {
+    // sem falhar se o navegador bloquear alguma API
+  }
+
+  const url = new URL(window.location.href);
+  url.searchParams.set("v", APP_VERSION);
+  url.searchParams.set("t", String(Date.now()));
+  window.location.replace(url.toString());
 }
 
 function textoEnergia(v) {
@@ -335,6 +356,7 @@ refs.subtabs.forEach((b) => b.addEventListener("click", () => alternarCategoria(
 document.getElementById("btn-adicionar").addEventListener("click", adicionarAtividade);
 document.getElementById("btn-montar-dia").addEventListener("click", montarPlanoHoje);
 document.getElementById("btn-gerar-plano").addEventListener("click", render);
+document.getElementById("btn-force-refresh").addEventListener("click", forcarAtualizacao);
 document.getElementById("btn-limpar").addEventListener("click", () => {
   state.atividades = [];
   state.planoHojeIds = [];
@@ -378,6 +400,7 @@ refs.lista.addEventListener("input", (e) => {
 });
 
 if (refs.version) refs.version.textContent = APP_VERSION;
+if (refs.buildInfo) refs.buildInfo.textContent = `Build ativo: ${APP_VERSION}`;
 
 carregar();
 refs.energiaTexto.textContent = textoEnergia(Number(refs.energia.value));

@@ -38,3 +38,6 @@ Se o site não refletir a última versão:
 4. Se ainda mostrar versão antiga, abra em aba anônima e confira o selo de versão no topo (ex.: `2026.02.17-2`).
 
 > Esta versão já inclui cache-busting em `styles.css` e `app.js` via query string (`?v=...`).
+
+
+5. Se persistir, use o botão **Forçar atualização do app** na interface (ele limpa cache/service worker e recarrega com versão).

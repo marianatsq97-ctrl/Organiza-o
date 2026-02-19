@@ -303,3 +303,9 @@ footer {
   border-radius: 999px;
   vertical-align: middle;
 }
+
+
+.notice {
+  border-color: #3b82f6;
+  background: rgba(59,130,246,0.12);
+}

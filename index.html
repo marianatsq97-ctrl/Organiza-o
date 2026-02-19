@@ -16,7 +16,9 @@
       <div class="hero-cta">
         <button id="btn-gerar-plano" class="primary">Gerar plano do dia</button>
         <button id="btn-limpar" class="secondary">Recomeçar dia</button>
+        <button id="btn-force-refresh" class="secondary">Forçar atualização do app</button>
       </div>
+      <p id="build-info" class="muted"></p>
     </header>
 
     <main>
@@ -27,6 +29,9 @@
       </nav>
 
       <section id="tab-planejamento" class="tab-panel active">
+        <section class="card notice">
+          <strong>Não atualizou?</strong> Clique em <em>Forçar atualização do app</em> e depois faça login novamente no GitHub Pages se necessário.
+        </section>
         <section class="card">
           <div class="subtabs">
             <button class="subtab-btn active" data-categoria="trabalho">Atividades de Trabalho</button>
