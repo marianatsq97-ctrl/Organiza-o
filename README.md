@@ -31,7 +31,7 @@ Se o site não refletir a última versão:
    ```bash
    git push origin <sua-branch>
    ```
-2. Se a publicação usa `main`, faça merge da PR e confirme em **Settings > Pages**.
+2. Se a publicação usa `main` **ou** `principal`, faça merge da PR na branch configurada em **Settings > Pages**.
 3. Force atualização no navegador:
    - Windows/Linux: `Ctrl + F5`
    - Mac: `Cmd + Shift + R`
@@ -48,11 +48,11 @@ Se o site não refletir a última versão:
 Este repositório agora possui workflow em `.github/workflows/deploy-pages.yml`.
 
 Como funciona:
-- A cada `push` na branch `main`, o GitHub Actions publica automaticamente no Pages.
+- A cada `push` na branch `main` **ou** `principal`, o GitHub Actions publica automaticamente no Pages.
 - Você também pode rodar manualmente em **Actions > Deploy static site to GitHub Pages > Run workflow**.
 
 Se ainda não atualizou no seu link:
-1. Confirme se o commit está na `main` (não só em branch/PR).
+1. Confirme se o commit está na branch de publicação (`principal` no seu print, ou `main`).
 2. Abra **Actions** e verifique se o workflow `Deploy static site to GitHub Pages` concluiu com sucesso.
 3. Faça hard refresh no navegador (`Ctrl+F5` / `Cmd+Shift+R`).
 4. Abra em aba anônima.
