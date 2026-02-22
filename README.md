@@ -22,52 +22,19 @@ python3 -m http.server 4173
 
 Abra `http://localhost:4173`.
 
+## Publicação no GitHub Pages (automática e corrigida)
 
-## Publicação no GitHub Pages (quando não atualiza)
+Seu Pages está em **Deploy from branch** usando a branch **`principal`**.
 
-Se o site não refletir a última versão:
+Agora o repositório usa o workflow:
+- `.github/workflows/publish-principal.yml`
 
+Ele faz o seguinte:
+1. Quando houver push em `main` **ou** `principal`, o Actions publica o conteúdo para a branch `principal`.
+2. Como o Pages já lê a branch `principal`, o site atualiza automaticamente.
 
-### Importante no seu caso (print com branch `principal`)
-Seu GitHub Pages está configurado para **Implantar a partir de uma ramificação** usando **`principal`**.  
-Então só atualiza quando o commit entra nessa branch.
+### Se ainda aparecer versão antiga
+1. Abra **Actions** e confira se o workflow **Publish to principal (GitHub Pages branch mode)** terminou com sucesso.
+2. Em seguida, abra **Settings > Pages** e confirme que a origem continua `principal` + `/ (root)`.
+3. Faça hard refresh (`Ctrl+F5` / `Cmd+Shift+R`) ou teste em aba anônima.
 
-
-1. Garanta que o commit foi enviado para o GitHub:
-   ```bash
-   git push origin <sua-branch>
-   ```
-2. Se a publicação usa `main` **ou** `principal`, faça merge da PR na branch configurada em **Settings > Pages**.
-3. Force atualização no navegador:
-   - Windows/Linux: `Ctrl + F5`
-   - Mac: `Cmd + Shift + R`
-4. Se ainda mostrar versão antiga, abra em aba anônima e confira o selo de versão no topo (ex.: `2026.02.17-2`).
-
-> Esta versão já inclui cache-busting em `styles.css` e `app.js` via query string (`?v=...`).
-
-
-
-## Publicação automática no GitHub Pages (configurado)
-
-Este repositório agora possui workflow em `.github/workflows/deploy-pages.yml`.
-
-Como funciona:
-- A cada `push` na branch `principal`, o GitHub Actions publica automaticamente no Pages.
-- E quando houver push em `main`, o workflow de sincronização copia automaticamente para `principal`.
-- Você também pode rodar manualmente em **Actions > Deploy static site to GitHub Pages > Run workflow**.
-
-Se ainda não atualizou no seu link:
-1. Confirme se o commit está na branch de publicação (`principal` no seu print, ou `main`).
-2. Abra **Actions** e verifique se o workflow `Deploy static site to GitHub Pages` concluiu com sucesso.
-3. Faça hard refresh no navegador (`Ctrl+F5` / `Cmd+Shift+R`).
-4. Abra em aba anônima.
-
-
-## Correção definitiva para o seu cenário (main x principal)
-
-Como seu GitHub Pages está configurado para publicar da branch `principal`, foi adicionada automação para evitar divergência:
-
-- Workflow `sync-main-to-principal.yml`: sempre que houver push na `main`, ele sincroniza o conteúdo para `principal`.
-- Workflow `deploy-pages.yml`: publica no Pages quando houver push em `principal`.
-
-Assim, mesmo trabalhando na `main`, o site publicado na `principal` será atualizado automaticamente.

@@ -1,0 +1,27 @@
+name: Publish to principal (GitHub Pages branch mode)
+
+on:
+  push:
+    branches:
+      - main
+      - principal
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Publish repository root to principal
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: principal
+          publish_dir: .
+          force_orphan: false
+          enable_jekyll: false
