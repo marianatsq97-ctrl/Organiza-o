@@ -294,18 +294,5 @@ footer {
 .subtab-btn.active { background: rgba(96, 165, 250, 0.18); border-color: var(--accent); }
 
 
-.version-pill {
-  font-size: 0.7rem;
-  background: rgba(96,165,250,0.2);
-  border: 1px solid #3b82f6;
-  color: #bfdbfe;
-  padding: 0.18rem 0.4rem;
-  border-radius: 999px;
-  vertical-align: middle;
-}
 
 
-.notice {
-  border-color: #3b82f6;
-  background: rgba(59,130,246,0.12);
-}

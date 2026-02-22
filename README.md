@@ -46,8 +46,6 @@ Então só atualiza quando o commit entra nessa branch.
 > Esta versão já inclui cache-busting em `styles.css` e `app.js` via query string (`?v=...`).
 
 
-5. Se persistir, use o botão **Forçar atualização do app** na interface (ele limpa cache/service worker e recarrega com versão).
-
 
 ## Publicação automática no GitHub Pages (configurado)
 
